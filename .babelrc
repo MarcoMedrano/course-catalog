@@ -1,0 +1,11 @@
+{
+    "sourceMaps": true,
+    "presets": [
+      "env",
+      "react"
+     ],
+    "plugins": [
+      "transform-decorators-legacy",
+      "transform-object-rest-spread"
+    ]
+}

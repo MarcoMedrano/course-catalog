@@ -1,0 +1,12 @@
+{
+   "compilerOptions": {
+      "target": "ES6",
+      "module": "amd",
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true
+   },
+   "exclude": [
+      "node_modules",
+      ".fusebox"
+   ]
+}
