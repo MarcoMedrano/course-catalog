@@ -26,7 +26,7 @@ export default class Course extends Component {
     super(props);
 
     // Just initial fake data.
-    this.state = {dto:{ "id": "", "name": "", "description": "", "textbooks": [] }, message:null};
+    this.state = {dto:{ "id": "", "name": "", "description": "", "textbooks": [] }, backupDto:null, message:null};
   }
 
   componentDidMount() {
@@ -34,24 +34,40 @@ export default class Course extends Component {
     this.getCourseFromDal();
   }
 
-  onClickSave() {
-    Dal.Courses.update(this.state.dto).then( () => this.setState({message:'Course updated'}));
-  }
-
-  onDiscard() {
-    this.getCourseFromDal();
-  }
 
   getCourseFromDal() {
     Dal.Courses.getAll().then(courses => {
-      const newDto = $.extend({}, courses[0]);
-      this.setState({ dto:newDto });
+      const newDto = $.extend(true, {}, courses[0]);
+      this.setState({ dto:newDto, backupDto: courses[0]});
     });
   }
 
   setDtoState(propertyName, e) {
     this.state.dto[propertyName] = e.target.value;
     this.setState({ dto: this.state.dto });
+  }
+
+  Save() {
+    console.debug('Saving changes');
+    Dal.Courses.update(this.state.dto).then( () => this.setState({message:'Course updated'}));
+  }
+
+  SaveTextBook() {
+    //TODO should go by its own DAL but as there is not enough time neither was a requirement
+    const courseToSave = $.extend(true, {}, this.state.backupDto);
+    courseToSave.textbooks =  this.state.dto.textbooks;
+    Dal.Courses.update(courseToSave).then( () => this.setState({message:'Textbook updated'}));
+  }
+
+  DiscardTextBook() {
+    const courseToDiscard = $.extend(true, {}, this.state.dto);
+    courseToDiscard.textbooks =  this.state.backupDto.textbooks;
+    this.setState({dto:courseToDiscard})
+  }
+
+  Discard() {
+    console.debug('Discarting changes');
+    this.getCourseFromDal();
   }
 
   renderMessage(message){
@@ -73,10 +89,10 @@ export default class Course extends Component {
           <textarea value={this.state.dto.description} onChange={e => this.setDtoState('description', e)} />
         </FormField>
       </FormFields>
-      <TextBookList list={this.state.dto.textbooks} />
+      <TextBookList list={this.state.dto.textbooks} onSave={this.SaveTextBook} onDiscard={this.DiscardTextBook} />
       <Footer pad={{ vertical: 'medium', between: 'small' }} justify='center'>
-        <Button icon={<OkIcon type='logo' />} label='Save' primary={true} onClick={this.onClickSave} />
-        <Button icon={<CancelIcon />} label='Discard' onClick={this.onDiscard} />
+        <Button icon={<OkIcon type='logo' />} label='Save' primary={true} onClick={this.Save} />
+        <Button icon={<CancelIcon />} label='Discard' onClick={this.Discard} />
       </Footer>
     </Form>;
   }

@@ -11,7 +11,8 @@ export default class BaseDal {
   getAll() {
     console.info('.getAll ');
     return new Promise((resolve, reject) => {
-      resolve(this.data.select().toArray());
+      const courses = $.extend(true, {}, this.data.select().toArray());
+      resolve(courses);
     });
   }
 
