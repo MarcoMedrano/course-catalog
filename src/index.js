@@ -14,41 +14,44 @@ import Title from 'grommet/components/Title';
 import CatalogIcon from 'grommet/components/icons/base/CatalogOption';
 import LogoutIcon from 'grommet/components/icons/base/Power';
 
+import Dal from './dal/Dal';
+
 class MainApp extends Component {
 
   constructor() {
     super();
-
-    this.state = {mainPanel:null};
+    
+    Dal.setType("demo");
+    this.state = { mainPanel: null };
   }
 
-  renderMainPanel(){
-    if(this.state.mainPanel)
+  renderMainPanel() {
+    if (this.state.mainPanel)
       return this.state.mainPanel;
     else
       return "Main Content here +";
   }
- 
+
   render() {
     try {
       return (
         <App centered={false}>
-          <Box direction='row' justify='between' align='center' alignContent='center' colorIndex='brand' pad={{horizontal:'small'}}>
-              <Header >
-                  <Title>
-                      <CatalogIcon size='medium' />
-                      Course Catalog     
+          <Box direction='row' justify='between' align='center' alignContent='center' colorIndex='brand' pad={{ horizontal: 'small' }}>
+            <Header >
+              <Title>
+                <CatalogIcon size='medium' />
+                Course Catalog
                   </Title>
-              </Header>
-              <Box direction='row' pad={{between:'medium'}}>
-                <LogoutIcon size='small' />
-              </Box>
+            </Header>
+            <Box direction='row' pad={{ between: 'medium' }}>
+              <LogoutIcon size='small' />
+            </Box>
           </Box>
           <Split separator={true} flex='right'>
             <Box justify='start' align='start' full='vertical' pad='small' basis='1/4' >
               {/*<MainMenu onMenuClick={p => this.setState({mainPanel:p})}/>*/}
             </Box>
-            <Box justify='center' align='center'  pad='small' basis='3/4'>
+            <Box justify='center' align='center' pad='small' basis='3/4'>
               {this.renderMainPanel()}
             </Box>
           </Split>
