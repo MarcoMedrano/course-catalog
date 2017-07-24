@@ -19,9 +19,9 @@ export default class BaseDal {
     console.info('.update ', item);
 
     return new Promise((resolve, reject) => {
-      const original = this.data.select(d => d).where(d => d.Id == item.Id).first();
+      const originalItem = this.data.select(d => d).where(d => d.id == item.id).first();
       const source = this.data.getSource();
-      const index = source.indexOf(item);
+      const index = source.indexOf(originalItem);
       source[index] = item;
       resolve();
     });

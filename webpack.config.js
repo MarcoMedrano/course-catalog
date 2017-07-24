@@ -23,9 +23,8 @@ module.exports = {
 			{
         test: /\.scss$/,
         loader: "style-loader!css-loader!sass-loader"
-      }
-			//only enable this if you want jquery in the global window
-			// { test: require.resolve("jquery"), loader: "expose-loader?$!expose-loader?jQuery" }
+      },
+			{ test: require.resolve("jquery"), loader: "expose-loader?$!expose-loader?jQuery" }
 		]
 	},
   plugins: [

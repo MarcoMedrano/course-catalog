@@ -16,13 +16,15 @@ import LogoutIcon from 'grommet/components/icons/base/Power';
 
 import Dal from './dal/Dal';
 
+import CoursePanel from './ui/courses/CoursePanel';
+
 class MainApp extends Component {
 
   constructor() {
     super();
     
     Dal.setType("demo");
-    this.state = { mainPanel: null };
+    this.state = { mainPanel: <CoursePanel /> };
   }
 
   renderMainPanel() {

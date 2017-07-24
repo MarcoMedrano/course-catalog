@@ -8,14 +8,13 @@ let fuse = new FuseBox({
         SVGPlugin(),
         CSSPlugin(),
         BabelPlugin()
-    ]/*,
-    //JIC I need jquery
+    ],
     shim: {
         jquery: {
             source: "node_modules/jquery/dist/jquery.min.js",
             exports: "$",
         },
-   }*/
+   }
 });
 
 fuse.dev();
