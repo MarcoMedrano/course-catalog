@@ -1,5 +1,6 @@
 import Enumerable from 'linq/linq'
 import React, { Component } from 'react';
+import autobind from 'autobind-decorator';
 
 import Box from 'grommet/components/Box';
 import Form from 'grommet/components/Form';
@@ -16,8 +17,7 @@ import OkIcon from 'grommet/components/icons/base/Checkmark';
 import CancelIcon from 'grommet/components/icons/base/Close';
 
 import Dal from './../../dal/Dal';
-import autobind from 'autobind-decorator';
-
+import TextBookList from './../textbooks/TextBookList';
 // Autobind is not efficient in all cases, I am using it just to demostrate I use some decorators
 @autobind
 export default class Course extends Component {
@@ -26,7 +26,7 @@ export default class Course extends Component {
     super(props);
 
     // Just initial fake data.
-    this.state = {dto:{ "id": "", "name": "", "description": "" }, message:null};
+    this.state = {dto:{ "id": "", "name": "", "description": "", "textbooks": [] }, message:null};
   }
 
   componentDidMount() {
@@ -73,6 +73,7 @@ export default class Course extends Component {
           <textarea value={this.state.dto.description} onChange={e => this.setDtoState('description', e)} />
         </FormField>
       </FormFields>
+      <TextBookList list={this.state.dto.textbooks} />
       <Footer pad={{ vertical: 'medium', between: 'small' }} justify='center'>
         <Button icon={<OkIcon type='logo' />} label='Save' primary={true} onClick={this.onClickSave} />
         <Button icon={<CancelIcon />} label='Discard' onClick={this.onDiscard} />
